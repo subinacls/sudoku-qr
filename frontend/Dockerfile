@@ -1,26 +1,27 @@
-# ─── Builder Stage ──────────────────────────────────────────────────────────
+# ─── Builder Stage ────────────────────────────────────────────────────────────
 FROM node:18-alpine AS builder
 WORKDIR /app
 
-# Copy manifests & install everything (including devDependencies)
-COPY package.json package-lock.json ./
-RUN npm ci
+# 1. Copy package.json only (no package-lock.json assumed)
+COPY package.json ./
 
-# Ensure PostCSS plugins exist
-# (only needed if you haven’t already added them to package.json)
-RUN npm install --save-dev autoprefixer postcss
+# 2. Install dependencies + autoprefixer so PostCSS can find it
+RUN npm install --legacy-peer-deps \
+    && npm install --no-save autoprefixer
 
-# Copy source & build
+# 3. Copy entire source, then build
 COPY . .
 RUN npm run build
 
-# ─── Production Stage ───────────────────────────────────────────────────────
+# ─── Production Stage ─────────────────────────────────────────────────────────
 FROM nginx:stable-alpine
-# Remove default site
+
+# 4. Remove default static assets and copy in ours
 RUN rm -rf /usr/share/nginx/html/*
-# Copy built assets
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Expose port (Railway will map $PORT → 80 by default)
+# 5. Expose port (Railway maps $PORT→80 by default) and start Nginx
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
+
+
