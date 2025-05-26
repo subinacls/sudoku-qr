@@ -1,23 +1,32 @@
-
+# Use a minimal Python runtime
 FROM python:3.12-slim
 
+# Set working dir
 WORKDIR /app
 
-# System dependencies for ReportLab and model download
+# Install system deps needed by ReportLab (and clean up apt cache)
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends libfreetype6-dev libjpeg-dev wget \
+    && apt-get install -y --no-install-recommends \
+         libfreetype6-dev \
+         libjpeg-dev \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Python dependencies
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Download MNIST ONNX model at build time
-RUN mkdir -p /models && wget -q -O /models/mnist.onnx https://huggingface.co/onnx/models/resolve/main/vision/mnist-8.onnx
-
+# Copy your application code (including vendored model under backend/models/)
 COPY . /app
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
+# Copy the vendored MNIST ONNX model into /models for runtime use
+RUN mkdir -p /models \
+    && cp /app/backend/models/mnist-8.onnx /models/mnist.onnx
 
-HEALTHCHECK CMD curl -f http://localhost:8000/ || exit 1
+# Expose the port Railway sets (fallback to 8000 if PORT is unset)
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "${PORT:-8000}"]
 
+# Simple healthcheck against the root endpoint
+HEALTHCHECK CMD curl -f http://localhost:${PORT:-8000}/ || exit 1
+
+# Drop back to a non-root user
 USER 1001
