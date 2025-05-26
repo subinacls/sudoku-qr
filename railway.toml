@@ -1,0 +1,38 @@
+# ──────────────────────────────────────────────────────────────────────────────
+#  railway.toml ― single‑container build:  React ↗  FastAPI  ↘
+#               (build React, copy bundle, launch Uvicorn)
+# ──────────────────────────────────────────────────────────────────────────────
+# tell Railway to load both runtimes
+[build.nixpacksPlan]
+providers = ["python", "node"]
+
+# ---------- system libraries (Pillow & ReportLab need these) ------------------
+[build.nixpacksPlan.phases.setup]
+aptPkgs = ["libjpeg-dev", "libfreetype6-dev"]
+
+# ---------- install dependencies ---------------------------------------------
+[build.nixpacksPlan.phases.install]
+cmds = [
+  # Python first
+  "pip install --upgrade pip",
+  "pip install -r backend/requirements.txt",
+  # Node deps
+  "npm ci --prefix frontend"
+]
+
+# ---------- build the React bundle -------------------------------------------
+[build.nixpacksPlan.phases.build]
+cmds = [
+  "npm run build --prefix frontend"
+]
+
+# ---------- launch the app ----------------------------------------------------
+[deploy]
+# Railway injects PORT; default to 8000 locally
+startCommand = "uvicorn backend.app.main:app --host 0.0.0.0 --port ${PORT:-8000}"
+
+# ---------- runtime environment ----------------------------------------------
+[variables]
+PORT          = "8000"          # for local `railway run`
+FRONTEND_DIR  = "frontend/dist" # FastAPI serves static files from here
+PYTHONUNBUFFERED = "1"
