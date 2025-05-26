@@ -1,0 +1,47 @@
+
+version: '3.9'
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: sudoku
+      POSTGRES_PASSWORD: sudoku
+      POSTGRES_DB: sudoku
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql+asyncpg://sudoku:sudoku@db:5432/sudoku
+      SECRET_KEY: supersecret
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+volumes:
+  postgres_data:
+
+
+prometheus:
+  image: prom/prometheus
+  volumes:
+    - ./infra/prometheus.yml:/etc/prometheus/prometheus.yml
+  ports:
+    - "9090:9090"
+
+grafana:
+  image: grafana/grafana
+  ports:
+    - "3000:3000"
+  depends_on:
+    - prometheus
