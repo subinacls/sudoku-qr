@@ -74,3 +74,4 @@ The backend reads configuration from **environment variables** (or a local `.env
 * Constrain `CORS_ALLOWED_ORIGINS`.  
 * Use Railway variables UI to set env values.  
 * Add a PostgreSQL volume, Grafana volume, and enable TLS at the ingress.
+# sudoku-qr
