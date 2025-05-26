@@ -8,7 +8,7 @@ python-jose[cryptography]
 python-multipart
 #pydantic
 pydantic<2
-pydantic[email]<
+email-validator>=1.3.0
 qrcode
 pillow
 pyzbar
