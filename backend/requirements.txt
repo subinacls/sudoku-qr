@@ -6,7 +6,8 @@ asyncpg
 passlib[bcrypt]
 python-jose[cryptography]
 python-multipart
-pydantic
+#pydantic
+pydantic<2
 qrcode
 pillow
 pyzbar
