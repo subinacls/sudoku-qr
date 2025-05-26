@@ -7,14 +7,14 @@ Auto‑generated documentation to improve code clarity.
 import random, math, json, hashlib
 from typing import List, Tuple
 
-def factor_pairs(
-    """Factor pairs."""n: int):
+def factor_pairs(n: int):
+    """Factor pairs."""
     for i in range(1, int(n**0.5)+1):
         if n % i == 0:
             yield i, n//i
 
-def get_subgrid_shape(
-    """Get subgrid shape."""size: int) -> Tuple[int,int]:
+def get_subgrid_shape(size: int) -> Tuple[int,int]:
+    """Get subgrid shape."""
     # Return (rows, cols) of subgrid
     # Prefer square subgrids when possible else pick closest factors
     root = int(math.isqrt(size))
@@ -30,12 +30,12 @@ def get_subgrid_shape(
             best = (r,c)
     return best
 
-def create_empty(
-    """Create empty."""size:int)->List[List[int]]:
+def create_empty(size:int)->List[List[int]]:
+    """Create empty."""
     return [[0]*size for _ in range(size)]
 
-def is_valid(
-    """Is valid."""board:List[List[int]], row:int,col:int,num:int, sub_r:int, sub_c:int)->bool:
+def is_valid(board:List[List[int]], row:int,col:int,num:int, sub_r:int, sub_c:int)->bool
+    """Is valid."""
     size=len(board)
     # row/col
     if num in board[row]: return False
@@ -48,8 +48,8 @@ def is_valid(
             if board[r][c]==num: return False
     return True
 
-def solve(
-    """Solve."""board:List[List[int]], sub_r:int, sub_c:int)->bool:
+def solve(board:List[List[int]], sub_r:int, sub_c:int)->bool:
+    """Solve."""
     size=len(board)
     for r in range(size):
         for c in range(size):
@@ -65,15 +65,15 @@ def solve(
                 return False
     return True
 
-def generate_full_board(
-    """Generate full board."""size:int)->List[List[int]]:
+def generate_full_board(size:int)->List[List[int]]:
+    """Generate full board."""
     sub_r, sub_c = get_subgrid_shape(size)
     board=create_empty(size)
     solve(board,sub_r,sub_c)
     return board
 
-def remove_numbers(
-    """Remove numbers."""board:List[List[int]], difficulty:str, sub_r:int, sub_c:int)->List[List[int]]:
+def remove_numbers(board:List[List[int]], difficulty:str, sub_r:int, sub_c:int)->List[List[int]]:
+    """Remove numbers."""
     size=len(board)
     difficulty_map={
         "easy": int(size*size*0.35),
@@ -89,8 +89,8 @@ def remove_numbers(
             removals-=1
     return board
 
-def generate_puzzle(
-    """Generate puzzle."""size:int=9,difficulty:str="easy"):
+def generate_puzzle(size:int=9,difficulty:str="easy"):
+    """Generate puzzle."""
     sub_r,sub_c=get_subgrid_shape(size)
     full=generate_full_board(size)
     puzzle=remove_numbers([row[:] for row in full], difficulty, sub_r, sub_c)
