@@ -16,7 +16,7 @@ import os
 from pydantic import BaseSettings
 
 class Settings(BaseSettings):
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql+asyncpg://sudoku:sudoku@db:5432/sudoku")
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql+asyncpg://postgres:euOkqpEVSgBhlWsPUMFSBTyXNauztgUJ@postgres.railway.internal:5432/railway")
     SECRET_KEY: str = os.getenv("SECRET_KEY", "changeme")
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 1 week
