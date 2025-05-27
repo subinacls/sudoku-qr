@@ -3,7 +3,7 @@ alembic
 fastapi
 uvicorn[standard]
 sqlalchemy[asyncio]
-psycopg2
+psycopg2-binary
 asyncpg
 passlib[bcrypt]
 python-jose[cryptography]
