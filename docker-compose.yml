@@ -15,7 +15,8 @@ services:
   backend:
     build: ./backend
     environment:
-      DATABASE_URL: postgresql+asyncpg://sudoku:sudoku@db:5432/sudoku
+      DATABASE_URL: postgresql+asyncpg://postgres:euOkqpEVSgBhlWsPUMFSBTyXNauztgUJ@postgres.railway.internal:5432/railway
+      # postgresql+asyncpg://sudoku:sudoku@db:5432/sudoku
       SECRET_KEY: supersecret
     depends_on:
       - db

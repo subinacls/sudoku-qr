@@ -19,7 +19,7 @@ if config.config_file_name is not None:
 
 # Override the sqlalchemy.url option to use the DATABASE_URL env var
 # (e.g. postgresql+asyncpg://user:pass@host:port/dbname)
-config.set_main_option("sqlalchemy.url", 'postgresql://postgres:euOkqpEVSgBhlWsPUMFSBTyXNauztgUJ@postgres.railway.internal:5432/railway')
+config.set_main_option("sqlalchemy.url", 'postgresql+asyncpg://postgres:euOkqpEVSgBhlWsPUMFSBTyXNauztgUJ@postgres.railway.internal:5432/railway')
 # Point Alembic at your models’ metadata for autogenerate support
 target_metadata = Base.metadata
 
