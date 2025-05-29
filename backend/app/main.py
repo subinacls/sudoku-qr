@@ -2,9 +2,9 @@ from .config import cors_settings
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .app.routers import auth, leaderboard, metrics, pdf, puzzles, submit
+from .routers import auth, leaderboard, metrics, pdf, puzzles, submit
 
-from .app.monitoring import MetricsMiddleware
+from .monitoring import MetricsMiddleware
 app = FastAPI(title="Sudoku QR API")
 app.add_middleware(MetricsMiddleware)
 
