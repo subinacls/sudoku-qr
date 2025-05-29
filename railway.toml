@@ -29,10 +29,11 @@ cmds = [
 # ---------- launch the app ----------------------------------------------------
 [deploy]
 # Railway injects PORT; default to 8000 locally
-startCommand = "uvicorn backend.app.main:app --host 0.0.0.0 --port ${PORT:-8000}"
+startCommand = "uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port ${PORT:-8000}"
 
 # ---------- runtime environment ----------------------------------------------
 [variables]
 PORT          = "8000"          # for local `railway run`
 FRONTEND_DIR  = "frontend/dist" # FastAPI serves static files from here
 PYTHONUNBUFFERED = "1"
+
