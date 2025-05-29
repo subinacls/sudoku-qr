@@ -8,7 +8,12 @@ providers = ["python", "node"]
 
 # ---------- system libraries (Pillow & ReportLab need these) ------------------
 [build.nixpacksPlan.phases.setup]
-aptPkgs = ["libjpeg-dev", "libfreetype6-dev"]
+aptPkgs = [
+  "libjpeg-dev",
+  "libfreetype6-dev",
+  "libzbar0",     # runtime library
+  "libzbar-dev"   # headers (optional, but safe)
+]
 
 # ---------- install dependencies ---------------------------------------------
 [build.nixpacksPlan.phases.install]
