@@ -11,7 +11,7 @@ raw_url = os.getenv("DATABASE_URL")
 # parse & ensure it's asyncpg
 url = make_url(raw_url)
 if url.drivername in ("postgresql", "postgres"):
-    url = url.set_drivername("postgresql+asyncpg")
+    url = url.set("postgresql+asyncpg")
 
 # create the async engine
 engine = create_async_engine(url, echo=True)
