@@ -10,6 +10,8 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
          libfreetype6-dev \
          libjpeg-dev \
+         libzbar0 \
+         libzbar0 \
     && rm -rf /var/lib/apt/lists/*
 
 # ─── Python Dependencies ──────────────────────────────────────────────────────
