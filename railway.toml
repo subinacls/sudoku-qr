@@ -11,8 +11,8 @@ providers = ["python", "node"]
 aptPkgs = [
   "libjpeg-dev",
   "libfreetype6-dev",
-  "libzbar0",     # runtime library
-  "libzbar-dev"   # headers (optional, but safe)
+  "libzbar0",
+  "libzbar-dev"
 ]
 
 # ---------- install dependencies ---------------------------------------------
