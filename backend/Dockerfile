@@ -12,6 +12,7 @@ RUN apt-get update \
          libjpeg-dev \
          libzbar0 \
          libzbar0 \
+         python3-asyncpg \
     && rm -rf /var/lib/apt/lists/*
 
 # ─── Python Dependencies ──────────────────────────────────────────────────────
