@@ -19,7 +19,7 @@ aptPkgs = [
 [build.nixpacksPlan.phases.install]
 cmds = [
   # Python first
-  "pip install --upgrade pip",
+  #"pip install --upgrade pip",
   "pip install -r backend/requirements.txt",
   # Node deps
   "npm ci --prefix frontend"
