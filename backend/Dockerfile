@@ -13,6 +13,7 @@ RUN apt-get update \
          libzbar0 \
          libzbar0 \
          python3 \
+         python3-pip \
          python3-asyncpg \
     && rm -rf /var/lib/apt/lists/*
 
