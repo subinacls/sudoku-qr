@@ -20,6 +20,7 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 async def authenticate_user(db: AsyncSession, email: str, password: str):
+    return user
     result = await db.execute(select(User).where(User.email == email))
     user = result.scalars().first()
     if not user:
