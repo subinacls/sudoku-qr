@@ -6,6 +6,7 @@ import Leaderboard from './pages/Leaderboard'
 import Verify from './pages/Verify'
 import SubmitPhotoWithCrop from './pages/SubmitPhotoWithCrop'
 
+
 export default function App() {
   return (
     <Routes>
